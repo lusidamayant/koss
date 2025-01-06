@@ -21,7 +21,11 @@
         <div class="card-body">
             <h2 class="mb-4 text-center">Detail Penghuni</h2>
 
-
+            <!-- Tanggal Pesan -->
+            <div class="mb-3">
+                <label class="form-label"><strong>Nama Penghuni:</strong></label>
+                <p>{{ \Carbon\Carbon::parse($penghuni->nama_penghuni)}}</p>
+            </div>
             <!-- Kamar Penghuni -->
             <div class="mb-3">
                 <label class="form-label"><strong>Kamar:</strong></label>

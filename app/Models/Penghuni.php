@@ -12,6 +12,7 @@ class Penghuni extends Model
     protected $table = 'penghuni_kost';
 
     protected $fillable = [
+        'nama_penghuni',
         'id_kamar',
         'tanggal_pesan',
         'tanggal_masuk',

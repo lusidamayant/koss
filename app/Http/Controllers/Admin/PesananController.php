@@ -135,4 +135,23 @@ class PesananController extends Controller
         // Menampilkan view detail pesanan
         return view('admin.pesanan.show', compact('pesanan'));
     }
+    // Controller: Admin/PesananController.php
+public function updateStatus(Request $request, $id)
+{
+    // Validasi status yang diterima
+    $this->validate($request, [
+        'status' => 'required|in:Pending,Diterima,Ditolak', // Pastikan status yang dikirim valid
+    ]);
+
+    // Cari pesanan berdasarkan ID
+    $pesanan = Pesanan::findOrFail($id);
+
+    // Update status pesanan
+    $pesanan->status = $request->status;
+    $pesanan->save();
+
+    // Redirect kembali ke halaman daftar pesanan dengan pesan sukses
+    return redirect()->route('admin.pesanan.index')->with('message', 'Status pesanan berhasil diubah!');
+}
+
 }

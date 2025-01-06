@@ -68,3 +68,11 @@ Route::middleware('auth:customer')->group(function(){
     Route::resource('kamar', UserKamarController::class);
     Route::resource('pemesanan', PesananController::class);
 });
+
+Route::middleware('auth:customer')->group(function() {
+    // Halaman pesanan saya
+    Route::get('pemesanan', [PesananController::class, 'index'])->name('pemesanan.index');
+    Route::get('pemesanan/{pesanan}', [PesananController::class, 'show'])->name('pemesanan.show');
+});
+
+

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Pembayaran;
 use App\Models\Penghuni;
 use App\Models\Pesanan;
@@ -46,7 +47,6 @@ class PembayaranController extends Controller
             'status' => 'required|in:Lunas,Belum Lunas',
         ]);
 
-
         // Simpan file bukti bayar jika ada
         $bukti_bayar = null;
         if ($request->hasFile('bukti_bayar')) {
@@ -55,7 +55,6 @@ class PembayaranController extends Controller
 
         // Simpan data pembayaran
         Pembayaran::create([
-            // 'id_penghuni' => $request->id_penghuni,
             'id_pesanan' => $request->id_pesanan,
             'periode' => $request->periode,
             'jumlah_bayar' => $request->jumlah_bayar,
@@ -79,56 +78,37 @@ class PembayaranController extends Controller
     }
 
     /**
-     * Menampilkan form untuk mengedit pembayaran.
+     * Mengupdate status pembayaran.
      */
-    public function edit($id)
+    public function updateStatus($id)
     {
-        // Mengambil data pembayaran berdasarkan ID
+        // Mencari pembayaran berdasarkan ID
         $pembayaran = Pembayaran::findOrFail($id);
 
-        // Mengambil semua data penghuni dan pesanan untuk dropdown
-        $penghuni = Penghuni::all();
-        $pesanan = Pesanan::all();
+        // Cek jika statusnya Lunas
+        if ($pembayaran->status != 'Lunas') {
+            // Mengubah status pembayaran menjadi Lunas
+            $pembayaran->status = 'Lunas';
+            $pembayaran->save();
 
-        return view('admin.pembayaran.edit', compact('pembayaran', 'penghuni', 'pesanan'));
-    }
+            // Jika status berhasil diubah, maka kita buat data penghuni baru
+            // Berdasarkan data pesanan yang ada
+            $pesanan = $pembayaran->pesanan;
 
-    /**
-     * Mengupdate pembayaran di database.
-     */
-    public function update(Request $request, $id)
-    {
-        // Validasi input
-        $request->validate([
-            // 'id_penghuni' => 'required|exists:penghuni_kost,id',
-            'id_pesanan' => 'required|exists:pesanans,id',
-            'periode' => 'required|string|max:255',
-            'jumlah_bayar' => 'required|integer|min:0',
-            'metode_bayar' => 'required|in:Transfer,Tunai',
-            'bukti_bayar' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'status' => 'required|in:Lunas,Belum Lunas',
-        ]);
-
-        // Ambil data pembayaran berdasarkan ID
-        $pembayaran = Pembayaran::findOrFail($id);
-
-        // Simpan file bukti bayar jika ada
-        if ($request->hasFile('bukti_bayar')) {
-            $bukti_bayar = $request->file('bukti_bayar')->store('bukti_bayar');
-            $pembayaran->bukti_bayar = $bukti_bayar;
+            // Menambahkan penghuni baru berdasarkan pesanan
+            Penghuni::create([
+                'nama_penghuni' => $pesanan->nama_penghuni,
+                'id_kamar' => $pesanan->id_kamar,
+                'tanggal_pesan' => now(),
+                'tanggal_masuk' => now(), // Tentukan tanggal masuk sesuai kebutuhan
+                'tanggal_keluar' => $pesanan->tanggal_keluar, // Tentukan tanggal masuk sesuai kebutuhan
+                'status' => 'Aktif',
+            ]);
         }
 
-        // Update data pembayaran
-        $pembayaran->update([
-            // 'id_penghuni' => $request->id_penghuni,
-            'id_pesanan' => $request->id_pesanan,
-            'periode' => $request->periode,
-            'jumlah_bayar' => $request->jumlah_bayar,
-            'metode_bayar' => $request->metode_bayar,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('admin.pembayaran.index')->with('success', 'Pembayaran berhasil diperbarui.');
+        // Redirect kembali ke halaman detail pembayaran dengan pesan sukses
+        return redirect()->route('admin.pembayaran.show', $pembayaran->id)
+                         ->with('success', 'Status pembayaran berhasil diperbarui dan penghuni baru telah ditambahkan.');
     }
 
     /**

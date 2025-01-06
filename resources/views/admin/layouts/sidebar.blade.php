@@ -38,7 +38,7 @@
                 </svg>
 
             </span>
-            <span class="app-brand-text demo menu-text fw-bold ms-2">sneat</span>
+            <span class="app-brand-text demo menu-text fw-bold ms-2">Kos Rempah</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -207,12 +207,13 @@
             </a>
         </li>
 
-        <li class="menu-item {{ Request::is('admin/customer*') ? 'active':'' }}">
+                <li class="menu-item {{ Request::is('admin/customer*') ? 'active' : '' }}">
             <a href="{{ route('admin.customer.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-package"></i> 
+                <i class="menu-icon fa fa-user"></i> <!-- Ganti ikon di sini -->
                 <div class="text-truncate" data-i18n="Customer">Customer</div>
             </a>
         </li>
+
 
         <li class="menu-item {{ Request::is('admin/pesanan*') ? 'active':'' }}">
             <a href="{{ route('admin.pesanan.index') }}" class="menu-link">
@@ -228,12 +229,12 @@
                 <div class="text-truncate" data-i18n="Pembayaran">Pembayaran</div>
             </a>
         </li>
-        <li class="menu-item">
+        <!-- <li class="menu-item">
             <a href="app-laporan.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i> 
                 <div class="text-truncate" data-i18n="Laporan">Laporan</div>
             </a>
-        </li>
+        </li> -->
         
         {{-- <!-- e-commerce-app menu start -->
         <li class="menu-item">
