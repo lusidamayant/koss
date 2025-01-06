@@ -167,14 +167,14 @@
     <!-- Contact Form and Map Section Side by Side -->
     <div class="contact-section">
         <!-- Contact Form -->
-        <form action="#">
+        {{-- <form action="#">
             <input type="text" name="name" placeholder="Your Name">
             <input type="email" name="email" placeholder="Email">
             <input type="tel" name="contact" placeholder="Contact No.">
             <input type="text" name="subject" placeholder="Subject">
             <textarea name="message" rows="5" placeholder="Message"></textarea>
             <input type="submit" value="Send Message">
-        </form>
+        </form> --}}
 
         <!-- Map Section -->
         <div class="map">

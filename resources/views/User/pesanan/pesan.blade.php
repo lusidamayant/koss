@@ -94,7 +94,7 @@
     <div class="col-12 col-md-6">
         <div class="booking-form">
             <h1 class="text-center mb-3">PEMESANAN KAMAR KOS</h1>
-            <form id="bookingForm" action="{{ route('kamar.buatPesanan', $kamar->id) }}" method="POST">
+            <form id="bookingForm" action="{{ route('.buatPesanan'kamar, $kamar->id) }}" method="POST">
                 @csrf
                 <input type="hidden" name="id_kamar" value="{{ $kamar->id }}">
                 <div class="form-group">

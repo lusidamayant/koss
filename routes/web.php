@@ -4,6 +4,7 @@ use App\Http\Controllers\User\KamarController as UserKamarController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\PesananController;
 use App\Http\Controllers\User\RegisterController;
+use App\Http\Controllers\User\PembayaranController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,9 +38,9 @@ Route::get('contact', function () {
 Route::get('pemesanan', function () {
     return view('user/pemesanan');
 });
-Route::get('pembayaran', function () {
-    return view('user/pembayaran');
-});
+// Route::get('pembayaran', function () {
+//     return view('user/pembayaran');
+// });
 // Route::get('/kamar/detail', [KamarController::class, 'show']);
 // Route::get('dashboard', function () {
 //     return view('Admin/dashboard');
@@ -54,6 +55,7 @@ Route::get('pembayaran', function () {
 // Route::get('kamar', function () {
 //     return view('user/kamar');
 // })->name('kamar');
+
 Route::controller(LoginController::class)->group(function(){
     Route::get('/logout', 'logout')->name('logout');
     Route::get('/login', 'index')->name('login');
@@ -67,4 +69,11 @@ Route::middleware('auth:customer')->group(function(){
     Route::post('/kamar/{kamar}/pesan', [UserKamarController::class, 'buatPesanan'])->name('kamar.buatPesanan');
     Route::resource('kamar', UserKamarController::class);
     Route::resource('pemesanan', PesananController::class);
+
+});
+
+Route::middleware('auth:customer')->group(function() {
+    // Halaman pesanan saya
+    Route::get('pemesanan', [PesananController::class, 'index'])->name('pemesanan.index');
+    Route::get('pemesanan/{pesanan}', [PesananController::class, 'show'])->name('pemesanan.show');
 });
