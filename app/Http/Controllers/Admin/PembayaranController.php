@@ -104,8 +104,13 @@ class PembayaranController extends Controller
                 'tanggal_keluar' => $pesanan->tanggal_keluar, // Tentukan tanggal masuk sesuai kebutuhan
                 'status' => 'Aktif',
             ]);
+
+            Pesanan::find($pembayaran->id_pesanan)->update([
+                'status' => 'Diterima'
+            ]);
         }
 
+        // toast('Pembayaran berhasil dikonfirmasi', 'succees')
         // Redirect kembali ke halaman detail pembayaran dengan pesan sukses
         return redirect()->route('admin.pembayaran.show', $pembayaran->id)
                          ->with('success', 'Status pembayaran berhasil diperbarui dan penghuni baru telah ditambahkan.');

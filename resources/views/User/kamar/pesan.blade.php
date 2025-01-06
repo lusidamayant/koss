@@ -124,6 +124,10 @@
                     <textarea id="alamat" name="alamat" placeholder="Masukkan Alamat Anda" required>{{ old('alamat') }}</textarea>
                 </div>
                 <div class="form-group">
+                    <label for="periode">Durasi Sewa (Bulan)</label>
+                    <input type="number" id="periode" name="periode" value="{{ old('periode') }}" placeholder="Masukkan Durasi sewa (bulan)" required>
+                </div>
+                <div class="form-group">
                     <label for="pembayaran">Metode Pembayaran</label>
                     <select id="pembayaran" name="pembayaran" required>
                         <option value="" disabled selected>Pilih Metode Pembayaran</option>

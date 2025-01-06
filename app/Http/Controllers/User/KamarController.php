@@ -105,8 +105,8 @@ class KamarController extends Controller
 
     Pembayaran::create([
         'id_pesanan' => $pesanan->id,
-        'periode' => 30,
-        'jumlah_bayar' => 0,
+        'periode' => $request->periode,
+        'jumlah_bayar' => $request->periode*$kamar->harga,
         'metode_bayar' => $request->pembayaran,
         'bukti_bayar' => null,
         'status' => 'Belum Lunas',

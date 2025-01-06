@@ -4,8 +4,8 @@
     <section class="hero-section">
         <h1>KAMAR KOS</h1>
     </section>
-    <div class="row gap-2 m-3">
-        @foreach ($kamar as $item)
+    <div class="row gap-2 m-3 justify-content-center">
+        @forelse ($kamar as $item)
             <div class="col-12 col-md-3 room-box">
                 <img src="{{ asset('storage/'.$item->foto) }}" alt="{{ $item->nama_kamar }}" style="height: 250px; object-fit: cover;" class="img-fluid">
                 <h3>{{ $item->nama_kamar }}</h3>
@@ -14,7 +14,11 @@
                 {{-- <button class="facility-btn" onclick="window.location.href='/kamar/detail'">Info Fasilitas</button> --}}
                 {{-- <button onclick="pesanKamar('Standard', 'Rp 1.000.000')">Pesan</button> --}}
             </div>
-        @endforeach
+        @empty
+            <div class="col-12 text-center">
+                <h3>Belum ada Kamar Tersedia</h3>
+            </div>
+        @endforelse
         {{-- <!-- Kamar 1 -->
         <div class="room-box">
             <img src="asset/kamarstd.jpeg" alt="Kamar 1">

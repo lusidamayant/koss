@@ -37,6 +37,11 @@ class Pesanan extends Model
         return $this->belongsTo(Kamar::class, 'id_kamar');  // 'id_kamar' mengacu pada kolom 'id' di tabel kamar
     }
 
+    public function pembayaran()
+    {
+        return $this->hasOne(Pembayaran::class, 'id_pesanan');
+    }
+
     // Status pesanan, untuk memudahkan dalam pengecekan
     const STATUS_PENDING = 'Pending';
     const STATUS_DITERIMA = 'Diterima';
