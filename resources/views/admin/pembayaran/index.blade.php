@@ -55,7 +55,7 @@
                         <td>
                             <div class="d-flex gap-2 flex-wrap">
                                 <a href="{{ route('admin.pembayaran.show', $p->id) }}" class="btn btn-info"> <i class="fas fa-eye"></i></a>
-                                <a href="{{ route('admin.pembayaran.edit', $p->id) }}" class="btn btn-warning"> <i class="fas fa-pencil"></i></a>
+                                
                                 <form action="{{ route('admin.pembayaran.destroy', $p->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')

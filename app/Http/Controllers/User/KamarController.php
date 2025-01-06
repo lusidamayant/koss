@@ -75,43 +75,46 @@ class KamarController extends Controller
     }
 
     public function buatPesanan(Request $request)
-    {
-        $fields = $request->validate([
-            'nama' => 'required|string',
-            'email' => 'required|email',
-            'noTelp' => 'required',
-            'alamat' => 'required|string',
-            'pembayaran' => 'required|in:Transfer,Tunai',
-            'id_kamar' => 'required'
-        ]);
+{
+    $fields = $request->validate([
+        'nama' => 'required|string',
+        'email' => 'required|email',
+        'noTelp' => 'required',
+        'alamat' => 'required|string',
+        'pembayaran' => 'required|in:Transfer,Tunai',
+        'id_kamar' => 'required'
+    ]);
 
-        // Mengurangi kapasitas kamar yang dipesan
-        $kamar = Kamar::find($request->id_kamar);
-        $kamar->decrement('kapasitas', 1);
+    // Mengurangi kapasitas kamar yang dipesan
+    $kamar = Kamar::find($request->id_kamar);
+    $kamar->decrement('kapasitas', 1);
 
-        // Menyimpan data pesanan
-        $pesanan = Pesanan::create([
-            'customer_id' => auth('customer')->id(), // ID customer
-            'nama_penghuni' => $request->nama,
-            'gender' => $request->gender ?? 'Laki-Laki',
-            'email' => $request->email,
-            'kontak' => $request->noTelp,
-            'alamat' => $request->alamat,
-            'id_kamar' => $request->id_kamar,
-            'harga_sewa' => $kamar->harga,
-            'status' => 'Pending', 
-            'nomor_pesanan' => date('Ymdhis')
-        ]);
+    // Menyimpan data pesanan
+    $pesanan = Pesanan::create([
+        'customer_id' => auth('customer')->id(),
+        'nama_penghuni' => $request->nama,
+        'gender' => $request->gender ?? 'Laki-Laki',
+        'email' => $request->email,
+        'kontak' => $request->noTelp,
+        'alamat' => $request->alamat,
+        'id_kamar' => $request->id_kamar,
+        'harga_sewa' => $kamar->harga,
+        'status' => 'Pending',
+        'nomor_pesanan' => date('Ymdhis')
+    ]);
 
-        Pembayaran::create([
-            'id_pesanan' => $pesanan->id,
-            'periode' => 30,
-            'jumlah_bayar' => 0,
-            'metode_bayar' => $request->pembayaran,
-            'bukti_bayar' => null,
-            'status' => 'Belum Lunas',
-        ]);
+    Pembayaran::create([
+        'id_pesanan' => $pesanan->id,
+        'periode' => 30,
+        'jumlah_bayar' => 0,
+        'metode_bayar' => $request->pembayaran,
+        'bukti_bayar' => null,
+        'status' => 'Belum Lunas',
+    ]);
 
-        return redirect()->route('pemesanan.index')->with('success', 'Pesanan berhasil dibuat. Menunggu konfirmasi pembayaran kepada pemilik kos.');
-    }
+    // Redirect ke halaman detail pesanan setelah pesanan berhasil dibuat
+    return redirect()->route('pemesanan.show', $pesanan->id)->with('success', 'Pesanan berhasil dibuat. Menunggu konfirmasi pembayaran kepada pemilik kos.');
+}
+
+
 }

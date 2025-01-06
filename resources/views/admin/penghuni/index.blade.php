@@ -28,6 +28,7 @@
                 <thead>
                     <tr>
                         <th scope="col">No</th>
+                        <th scope="col">Nama Penghuni</th>
                         <th scope="col">Nama Kamar</th>
                         <th scope="col">Tanggal Pesan</th>
                         <th scope="col">Tanggal Masuk</th>
@@ -40,6 +41,7 @@
                     @foreach ($penghuni as $p)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
+                        <td>{{ $p->nama_penghuni }}</td>
                         <td>{{ $p->kamar->nama_kamar ?? '-' }}</td>
                         <td>{{ $p->tanggal_pesan }}</td>
                         <td>{{ $p->tanggal_masuk }}</td>

@@ -21,6 +21,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('customer', CustomerController::class);
         Route::resource('pesanan', PesananController::class);
         Route::resource('pembayaran', PembayaranController::class);
+
+        Route::put('/pembayaran/{id}/update-status', [PembayaranController::class, 'updateStatus'])->name('pembayaran.updateStatus');
+
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     });
 });

@@ -27,6 +27,7 @@ class PenghuniController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'nama_penghuni' => 'required|string|max:255',
             'id_kamar' => 'required|exists:kamar,id',
             'tanggal_pesan' => 'required|date',
             'tanggal_masuk' => 'required|date',
@@ -52,6 +53,7 @@ class PenghuniController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
+            'nama_penghuni' => 'required|string|max:255',
             'id_kamar' => 'required|exists:kamar,id',
             'tanggal_pesan' => 'required|date',
             'tanggal_masuk' => 'required|date',

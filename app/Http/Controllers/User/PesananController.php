@@ -15,7 +15,7 @@ class PesananController extends Controller
     }
 
     public function show(Pesanan $pesanan)
-{
-    return view('user.pesanan.show', compact('pesanan'));
-}
+    {
+        return view('user.pesanan.show', compact('pesanan'));
+    }
 }
